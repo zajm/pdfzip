@@ -32,7 +32,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          pip install ".[dev]"
 
       - name: Build with PyInstaller
         run: |
@@ -40,8 +40,15 @@ jobs:
             --onefile \
             --windowed \
             --name PDFZip \
-            --add-data "src/pdfzip:pdfzip" \
-            src/pdfzip/__main__.py
+            --collect-submodules pdfzip \
+            --hidden-import pdfzip.gui \
+            --hidden-import pdfzip.gui.app \
+            --hidden-import pdfzip.gui.main_window \
+            --hidden-import pdfzip.gui.pdf_preview \
+            --hidden-import pdfzip.gui.log_panel \
+            --hidden-import pdfzip.core \
+            --hidden-import pdfzip.core.interleaver \
+            scripts/run_gui.py
 
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v4
@@ -63,7 +70,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          pip install ".[dev]"
 
       - name: Build with PyInstaller
         run: |
@@ -71,8 +78,15 @@ jobs:
             --onefile `
             --windowed `
             --name PDFZip `
-            --add-data "src/pdfzip;pdfzip" `
-            src/pdfzip/__main__.py
+            --collect-submodules pdfzip `
+            --hidden-import pdfzip.gui `
+            --hidden-import pdfzip.gui.app `
+            --hidden-import pdfzip.gui.main_window `
+            --hidden-import pdfzip.gui.pdf_preview `
+            --hidden-import pdfzip.gui.log_panel `
+            --hidden-import pdfzip.core `
+            --hidden-import pdfzip.core.interleaver `
+            scripts/run_gui.py
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
