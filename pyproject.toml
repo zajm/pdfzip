@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdfzip"
+version = "0.1.0"
+description = "A tool to interleave PDF pages with GUI and CLI support"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = [
+    "PySide6>=6.5",
+    "pypdf>=3.0",
+    "PyMuPDF>=1.23",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller>=6.0",
+    "pytest>=7.0",
+]
+
+[project.scripts]
+pdf-zip = "pdfzip:main"
+
+[project.gui-scripts]
+pdf-zip-gui = "pdfzip:main_gui"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
